@@ -6,6 +6,16 @@
 int menu(void);
 
 void main(void){
+    // Estrutura de uma música.
+    typedef struct {
+        char title[30];
+        char author[30];
+        char album[25];
+        float duration;
+    } music;
+    // Criando o vetor do tipo music.
+    music musicas[1024];
+
     do{
         printf("oiiiee \n");
     }while(menu() != 5);
