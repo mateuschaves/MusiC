@@ -49,7 +49,7 @@ int menu(void){
     printf("4 - Delete music.\n");
     printf("5 - Exit.\n");
     printf("Type your choice: ");
-    // Lendo a escolha do usuário e guardando em escolha.
+    // Lendo a escolha do usuário e guardando em choice.
     do{
         scanf("%d", &choice);
         if(choice > 5)
