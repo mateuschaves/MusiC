@@ -3,6 +3,7 @@
 #include <string.h>
 // Estrutura de uma música.
 typedef struct {
+    int enable;
     char title[30];
     char author[30];
     char album[25];
@@ -60,6 +61,8 @@ int menu(void){
 }
 // Cadastra uma nova música.
 int create(int n){
+    // Estado inicial de uma música é ativa. enable = 1.
+    musics[n].enable = 1;
     // Lendo as informações do teclado e salvando no vetor musicas.
     printf("Title: ");
     fflush(stdin);
