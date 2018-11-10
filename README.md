@@ -6,7 +6,7 @@ Projeto de um CRUD utilizando arquivos para a disciplina de Linguagem de Program
 
 Digite: 
 ```
-git clone https://github.com/mateuschaves/LPA-1.git
+git clone https://github.com/mateuschaves/MusiC.git
 ```
 ## Pré-requisitos
 
