@@ -16,6 +16,8 @@ music musics[1024];
 int menu(void);
 // Cadastra uma nova música.
 int create(int n);
+// Salva os dados do vetor no arquivo.
+int save(char txt[], int n);
 
 void main(void){
     // Contador de músicas.
@@ -36,7 +38,8 @@ void main(void){
                 break;
         }
     }while(choice != 5);
-    
+    // Chamando a função que salva as músicas no arquivo.
+    save("music.txt", count);
     system("pause");
 }
 
@@ -76,4 +79,30 @@ int create(int n){
     printf("Duration: ");
     fflush(stdin);
     scanf("%f", &musics[n].duration);
+}
+
+// Salva os dados no arquivo.
+int save(char txt[], int n){
+    FILE *archive;
+    // Abrindo o arquivo.
+    archive = fopen(txt, "w");
+    // Arquivo não encontrado.
+    if(archive == NULL){
+        printf("Archive not found !");
+        return 0;
+    }
+    // Escrevendo no arquivo as informações do vetor de músicas.
+    for(int i = 0; i < n; i++){
+        if(musics[i].enable){
+            fprintf(archive, "%s", musics[i].title);
+            fprintf(archive, "%s", musics[i].author);
+            fprintf(archive, "%s", musics[i].album);
+            fprintf(archive, "%.2f", musics[i].duration);
+            fprintf(archive, "%s", "\n\n");
+        }
+    }
+    // Fechando o arquivo.
+    fclose(archive);
+    // Tudo certo, nada mudoouu
+    return 1;
 }
