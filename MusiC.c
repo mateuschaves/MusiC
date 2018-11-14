@@ -7,7 +7,7 @@ typedef struct {
     char title[30];
     char author[30];
     char album[25];
-    float duration;
+    char duration[6];
 } music;
 // Criando o vetor do tipo music.
 music musics[1024];
@@ -18,6 +18,8 @@ int menu(void);
 int create(int n);
 // Salva os dados do vetor no arquivo.
 int save(char txt[], int n);
+// Carrega as informações do arquivo no vetor.
+int load(char txt[]);
 
 void main(void){
     // Contador de músicas.
@@ -78,7 +80,7 @@ int create(int n){
     fgets(musics[n].album, 25, stdin);
     printf("Duration: ");
     fflush(stdin);
-    scanf("%f", &musics[n].duration);
+    fgets(musics[n].duration, 6, stdin);
 }
 
 // Salva os dados no arquivo.
@@ -97,7 +99,7 @@ int save(char txt[], int n){
             fprintf(archive, "%s", musics[i].title);
             fprintf(archive, "%s", musics[i].author);
             fprintf(archive, "%s", musics[i].album);
-            fprintf(archive, "%.2f", musics[i].duration);
+            fprintf(archive, "%s", musics[i].duration);
             fprintf(archive, "%s", "\n\n");
         }
     }
@@ -105,4 +107,9 @@ int save(char txt[], int n){
     fclose(archive);
     // Tudo certo, nada mudoouu
     return 1;
+}
+
+// Carrega as dados do arquivo.
+int load(char txt[]){
+
 }
