@@ -6,7 +6,7 @@ typedef struct {
     int enable;
     char title[30];
     char author[30];
-    char album[25];
+    char album[30];
     char duration[6];
 } music;
 // Criando o vetor do tipo music.
@@ -20,8 +20,12 @@ int create(int n);
 int save(char txt[], int n);
 // Carrega as informações do arquivo no vetor.
 int load(char txt[]);
+// Imprime o vetor de músicas.
+void show(int n);
 
 void main(void){
+    // Carregando as músicas salvas no arquivo.
+    load("music.txt");
     // Contador de músicas.
     int count = 0;
     // Guarda a escolha do usuário no menu.
@@ -111,5 +115,36 @@ int save(char txt[], int n){
 
 // Carrega as dados do arquivo.
 int load(char txt[]){
+   FILE *archive;
+   char l[30];
+   int i = 0;
+   // Abrindo o arquivo.
+   archive = fopen(txt,"r");
+   // Verificando se o arquivo existe.
+   if (archive == NULL){
+        printf("Erro! Impossivel abrir o arquivo!\n");
+        exit(1);
+   }
+   // Lendo os dados do arquivo e salvando no vetor.
+   while(!feof(archive)){
+       musics[i].enable = 1;
+       fgets(musics[i].title, 30, archive);
+       fgets(musics[i].author, 30, archive);
+       fgets(musics[i].album, 30, archive);
+       fgets(musics[i].duration, 6, archive);
+       fgets(l, 30, archive);
+       i++;
+   }
+   fclose(archive);
+   return 0;
+}
 
+// Imprime o vetor com as músicas.
+void show(int n){
+    for(int i = 0; i < n; i++){
+        printf("Title: %s", musics[i].title);
+        printf("Author: %s", musics[i].author);
+        printf("Album: %s", musics[i].album);
+        printf("Duration: %s\n\n", musics[i].duration);
+    }
 }
