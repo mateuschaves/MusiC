@@ -23,7 +23,7 @@ int load(char txt[]);
 // Imprime o vetor de músicas.
 void show(int n);
 // Deleta uma música.
-void delete(int index);
+void delete(int n);
 // Procura uma música na lista.
 int search(char title[50], int n);
 
@@ -47,6 +47,8 @@ void main(void){
                 // Somando mais um no contador de músicas.
                 count++;
                 break;
+            case 4:
+                delete(4);
         }
     }while(choice != 5);
     // Chamando a função que salva as músicas no arquivo.
@@ -104,7 +106,7 @@ int save(char txt[], int n){
     }
     // Escrevendo no arquivo as informações do vetor de músicas.
     for(int i = 0; i < n; i++){
-        if(musics[i].enable){
+        if(musics[i].enable == 1){
             fprintf(archive, "%s", musics[i].title);
             fprintf(archive, "%s", musics[i].author);
             fprintf(archive, "%s", musics[i].album);
@@ -155,8 +157,15 @@ void show(int n){
 }
 
 // Deleta uma música.
-void delete(int index){
-    musics[index].enable = 0;
+void delete(int n){
+    // Guarda o nome da música que o jovem deseja deletar.
+    char title[30];
+    printf("Type the name of the song: ");
+    // Lendo o nome da música informada pelo usuário.
+    fflush(stdin);
+    gets(title);
+    // Editando o status "enable" da música informada para false (0).
+    musics[search(title, n)].enable = 0;
 }
 
 // Procura uma música na playlist.
