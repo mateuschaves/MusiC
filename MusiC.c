@@ -35,8 +35,6 @@ void main(void){
     int count = 0;
     // Guarda a escolha do usuário no menu.
     int choice = -1;
-    // aaa
-    char title[50];
     // Loop com o menu da aplicação, condição de saída choice = 5.
     do{
         // Chamando a função do menu e guardando a escolha em choice.
