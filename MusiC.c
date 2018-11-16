@@ -28,11 +28,12 @@ void delete(int n);
 int search(char title[50], int n);
 // Função responsável por retornar o número de músicas cadastradas.
 int get_num_musics();
+// Função responsável por atualizar o número de músicas cadastradas.
+void set_num_musics(int num);
 
 void main(void){
     // Carregando as músicas salvas no arquivo.
     load("music.txt");
-    show(4);
     // Contador de músicas.
     int count = 0;
     // Guarda a escolha do usuário no menu.
@@ -189,7 +190,20 @@ int get_num_musics(){
     // Abrindo o arquivo com que guarda a quantidade de músicas cadastradas.
     archive = fopen("counter.txt", "r");
     // Lendo o valor e guardando na variável n.
-    n = fscanf(archive, "%d", &n);
+    fscanf(archive, "%d", &n);
+    // Fechando o arquivo.
+    fclose(archive);
     // Retornando o valor.
     return n;
+}
+
+// Função responsável por atualizar o número de músicas cadastradas.
+void set_num_musics(int num){
+    FILE *archive;
+    // Abrindo o arquivo em modo de edição.
+    archive = fopen("counter.txt", "w");
+    // Atualizando o valor do arquivo.
+    fprintf(archive, "%d", num);
+    // Fechando o arquivo.
+    fclose(archive);
 }
