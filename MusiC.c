@@ -22,10 +22,13 @@ int save(char txt[], int n);
 int load(char txt[]);
 // Imprime o vetor de músicas.
 void show(int n);
+// Deleta uma música.
+void delete(int index);
 
 void main(void){
     // Carregando as músicas salvas no arquivo.
     load("music.txt");
+    show(4);
     // Contador de músicas.
     int count = 0;
     // Guarda a escolha do usuário no menu.
@@ -147,4 +150,9 @@ void show(int n){
         printf("Album: %s", musics[i].album);
         printf("Duration: %s\n\n", musics[i].duration);
     }
+}
+
+// Deleta uma música.
+void delete(int index){
+    musics[index].enable = 0;
 }
