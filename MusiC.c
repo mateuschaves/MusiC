@@ -26,6 +26,8 @@ void show(int n);
 void delete(int n);
 // Procura uma música na lista.
 int search(char title[50], int n);
+// Função responsável por retornar o número de músicas cadastradas.
+int get_num_musics();
 
 void main(void){
     // Carregando as músicas salvas no arquivo.
@@ -177,4 +179,17 @@ int search(char title[50], int n){
             // Retornando o índice da música que possui o nome informado
             return i;
     }
+}
+
+// Retorna a quantidade de músicas já cadastradas na plataforma.
+int get_num_musics(){
+    FILE *archive;
+    // Guarda a quantidade de músicas.
+    int n;
+    // Abrindo o arquivo com que guarda a quantidade de músicas cadastradas.
+    archive = fopen("counter.txt", "r");
+    // Lendo o valor e guardando na variável n.
+    n = fscanf(archive, "%d", &n);
+    // Retornando o valor.
+    return n;
 }
