@@ -49,12 +49,6 @@ void main(void){
                 // Somando mais um no contador de músicas.
                 count++;
                 break;
-            case 2:
-                printf("Type a title: ");
-                fflush(stdin);
-                gets(title);
-                printf("%d \n", search(title, 4) );
-
         }
     }while(choice != 5);
     // Chamando a função que salva as músicas no arquivo.
