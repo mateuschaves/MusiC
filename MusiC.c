@@ -24,6 +24,8 @@ int load(char txt[]);
 void show(int n);
 // Deleta uma música.
 void delete(int index);
+// Procura uma música na lista.
+int search(char title[50], int n);
 
 void main(void){
     // Carregando as músicas salvas no arquivo.
@@ -33,6 +35,8 @@ void main(void){
     int count = 0;
     // Guarda a escolha do usuário no menu.
     int choice = -1;
+    // aaa
+    char title[50];
     // Loop com o menu da aplicação, condição de saída choice = 5.
     do{
         // Chamando a função do menu e guardando a escolha em choice.
@@ -45,6 +49,12 @@ void main(void){
                 // Somando mais um no contador de músicas.
                 count++;
                 break;
+            case 2:
+                printf("Type a title: ");
+                fflush(stdin);
+                gets(title);
+                printf("%d \n", search(title, 4) );
+
         }
     }while(choice != 5);
     // Chamando a função que salva as músicas no arquivo.
@@ -155,4 +165,15 @@ void show(int n){
 // Deleta uma música.
 void delete(int index){
     musics[index].enable = 0;
+}
+
+// Procura uma música na playlist.
+int search(char title[50], int n){
+    // Loop que percorre o vetor de músicas
+    for(int i = 0; i < n; i++){
+        // Verificando se a string procurada é igual ao título da música
+        if ( strcmp(musics[i].title, strcat(title, "\n")) == 0 )
+            // Retornando o índice da música que possui o nome informado
+            return i;
+    }
 }
