@@ -52,6 +52,9 @@ void main(void){
                 count++;
                 show(count);
                 break;
+            case 2:
+                show(count);
+                break;
             case 4:
                 delete(4);
         }
