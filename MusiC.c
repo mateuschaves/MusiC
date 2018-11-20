@@ -53,10 +53,11 @@ void main(void){
                 show(count);
                 break;
             case 2:
+                // Lista todas as músicas.
                 show(count);
                 break;
             case 4:
-                delete(4);
+                delete(count);
         }
     }while(choice != 5);
     // Chamando a função que salva as músicas no arquivo.
@@ -168,11 +169,14 @@ int load(char txt[]){
 
 // Imprime o vetor com as músicas.
 void show(int n){
+    printf("\n\n\n-=-=-=-=-=-=-=-=-=-= Musicas cadastradas -=-=-=-=-=-=-=-=-=-=\n\n\n");
     for(int i = 0; i < n; i++){
-        printf("Title: %s", musics[i].title);
-        printf("Author: %s", musics[i].author);
-        printf("Album: %s", musics[i].album);
-        printf("Duration: %s\n\n", musics[i].duration);
+        if(musics[i].enable == 1){
+            printf("Title: %s", musics[i].title);
+            printf("Author: %s", musics[i].author);
+            printf("Album: %s", musics[i].album);
+            printf("Duration: %s\n\n", musics[i].duration);
+        }
     }
 }
 
@@ -186,6 +190,7 @@ void delete(int n){
     gets(title);
     // Editando o status "enable" da música informada para false (0).
     musics[search(title, n)].enable = 0;
+    printf("%d\n", musics[search(title, n)].enable);
 }
 
 // Procura uma música na playlist.
