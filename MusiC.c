@@ -4,6 +4,7 @@
 // Estrutura de uma música.
 typedef struct {
     int enable;
+    int saved_before;
     char title[30];
     char author[30];
     char album[30];
@@ -34,8 +35,8 @@ void set_num_musics(int num);
 void main(void){
     // Carregando as músicas salvas no arquivo.
     load("music.txt");
-    // Contador de músicas.
-    int count = 0;
+    // Carregando a quantidade de músicas armazenadas.
+    int count = get_num_musics();
     // Guarda a escolha do usuário no menu.
     int choice = -1;
     // Loop com o menu da aplicação, condição de saída choice = 5.
@@ -49,6 +50,7 @@ void main(void){
                 create(count);
                 // Somando mais um no contador de músicas.
                 count++;
+                show(count);
                 break;
             case 4:
                 delete(4);
@@ -56,6 +58,8 @@ void main(void){
     }while(choice != 5);
     // Chamando a função que salva as músicas no arquivo.
     save("music.txt", count);
+    // Salvando o número de músicas armazenadas no arquivo.
+    set_num_musics(count);
     system("pause");
 }
 
@@ -71,6 +75,7 @@ int menu(void){
     printf("Type your choice: ");
     // Lendo a escolha do usuário e guardando em choice.
     do{
+        fflush(stdin);
         scanf("%d", &choice);
         if(choice > 5)
             printf("Informe uma escolha valida: ");
@@ -82,6 +87,8 @@ int menu(void){
 int create(int n){
     // Estado inicial de uma música é ativa. enable = 1.
     musics[n].enable = 1;
+    // Indica se essa música já foi salva antes.
+    musics[n].saved_before = 0;
     // Lendo as informações do teclado e salvando no vetor musicas.
     printf("Title: ");
     fflush(stdin);
@@ -114,7 +121,13 @@ int save(char txt[], int n){
             fprintf(archive, "%s", musics[i].author);
             fprintf(archive, "%s", musics[i].album);
             fprintf(archive, "%s", musics[i].duration);
-            fprintf(archive, "%s", "\n\n");
+            // Só salva com o espaçamento se ela ainda não foi salva no arquivo.
+            if(musics[i].saved_before == 0){
+                fprintf(archive, "%d", 1);
+                fprintf(archive, "%s", "\n\n");
+            }else{
+                fprintf(archive, "%d", 1);
+            }
         }
     }
     // Fechando o arquivo.
@@ -127,7 +140,7 @@ int save(char txt[], int n){
 int load(char txt[]){
    FILE *archive;
    char l[30];
-   int i = 0;
+   int i, k = 0;
    // Abrindo o arquivo.
    archive = fopen(txt,"r");
    // Verificando se o arquivo existe.
@@ -143,6 +156,7 @@ int load(char txt[]){
        fgets(musics[i].album, 30, archive);
        fgets(musics[i].duration, 6, archive);
        fgets(l, 30, archive);
+       fscanf(archive, "%d", k);
        i++;
    }
    fclose(archive);
