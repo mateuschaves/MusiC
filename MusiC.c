@@ -24,7 +24,7 @@ int load(char txt[]);
 // Imprime o vetor de músicas.
 void show(int n);
 // Deleta uma música.
-void delete(int n);
+int delete(int n);
 // Procura uma música na lista.
 int search(char title[50], int n);
 // Função responsável por retornar o número de músicas cadastradas.
@@ -39,6 +39,8 @@ void main(void){
     int count = get_num_musics();
     // Guarda a escolha do usuário no menu.
     int choice = -1;
+    // Quantidade de músicas deletadas.
+    int d = 0;
     // Loop com o menu da aplicação, condição de saída choice = 5.
     do{
         // Chamando a função do menu e guardando a escolha em choice.
@@ -57,13 +59,16 @@ void main(void){
                 show(count);
                 break;
             case 4:
-                delete(count);
+                if ( delete(count)  == -1)
+                    printf("\n\nPlease type a valid value ! \n\n");
+                d++;
+                break;
         }
     }while(choice != 5);
     // Chamando a função que salva as músicas no arquivo.
     save("music.txt", count);
     // Salvando o número de músicas armazenadas no arquivo.
-    set_num_musics(count);
+    set_num_musics(count - d);
     system("pause");
 }
 
@@ -171,7 +176,8 @@ int load(char txt[]){
 void show(int n){
     printf("\n\n\n-=-=-=-=-=-=-=-=-=-= Musicas cadastradas -=-=-=-=-=-=-=-=-=-=\n\n\n");
     for(int i = 0; i < n; i++){
-        if(musics[i].enable == 1){
+        if(musics[i].enable == 1 || musics[i].enable == 0 ){
+            printf("Enable: %d\n", musics[i].enable);
             printf("Title: %s", musics[i].title);
             printf("Author: %s", musics[i].author);
             printf("Album: %s", musics[i].album);
@@ -181,16 +187,20 @@ void show(int n){
 }
 
 // Deleta uma música.
-void delete(int n){
-    // Guarda o nome da música que o jovem deseja deletar.
-    char title[30];
-    printf("Type the name of the song: ");
-    // Lendo o nome da música informada pelo usuário.
+int delete(int n){
+    // Guarda o índice da música que o jovem deseja deletar.
+    int index;
+    printf("Type the index of the song: ");
+    // Lendo o índice da música informada pelo usuário.
     fflush(stdin);
-    gets(title);
-    // Editando o status "enable" da música informada para false (0).
-    musics[search(title, n)].enable = 0;
-    printf("%d\n", musics[search(title, n)].enable);
+    scanf("%d", &index);
+    // Verificando se o índice informado existe .
+    if(index > (n - 1)){
+        return -1;
+    }else{
+        // Editando o status "enable" da música informada para false (0).
+        musics[index].enable = 0;
+    }
 }
 
 // Procura uma música na playlist.
@@ -198,10 +208,13 @@ int search(char title[50], int n){
     // Loop que percorre o vetor de músicas
     for(int i = 0; i < n; i++){
         // Verificando se a string procurada é igual ao título da música
+        //printf("Comparando %s com %s : %d\n", musics[i].title, title, i);
         if ( strcmp(musics[i].title, strcat(title, "\n")) == 0 )
             // Retornando o índice da música que possui o nome informado
             return i;
     }
+    // Deu ruim borracha.
+    return -1;
 }
 
 // Retorna a quantidade de músicas já cadastradas na plataforma.
