@@ -25,6 +25,8 @@ int load(char txt[]);
 void show(int n);
 // Deleta uma música.
 int delete(int n);
+// Edita uma música.
+void update(void);
 // Procura uma música na lista.
 int search(char title[50], int n);
 // Função responsável por retornar o número de músicas cadastradas.
@@ -57,6 +59,10 @@ void main(void){
             case 2:
                 // Lista todas as músicas.
                 show(count);
+                break;
+            case 3:
+                // Atualiza uma música.
+                update();
                 break;
             case 4:
                 if ( delete(count)  == -1)
@@ -208,10 +214,10 @@ int search(char title[50], int n){
     // Loop que percorre o vetor de músicas
     for(int i = 0; i < n; i++){
         // Verificando se a string procurada é igual ao título da música
-        //printf("Comparando %s com %s : %d\n", musics[i].title, title, i);
-        if ( strcmp(musics[i].title, strcat(title, "\n")) == 0 )
+        if ( strcmp(musics[i].title, title) == 0 ){
             // Retornando o índice da música que possui o nome informado
             return i;
+        }
     }
     // Deu ruim borracha.
     return -1;
@@ -241,4 +247,27 @@ void set_num_musics(int num){
     fprintf(archive, "%d", num);
     // Fechando o arquivo.
     fclose(archive);
+}
+
+// Função responsável por atualizar o registro de uma música.
+void update(void){
+    // Guarda o índice da música selecionada.
+    int index;
+    printf("Type the id of the song: ");
+    fflush(stdin);
+    // Lendo o nome da música que será editada.
+    scanf("%d", &index);
+    // Lendo os valores e atualizando o vetor.
+    printf("Title: ");
+    fflush(stdin);
+    fgets(musics[index].title, 30, stdin);
+    printf("Author: ");
+    fflush(stdin);
+    fgets(musics[index].author, 30, stdin);
+    printf("Album: ");
+    fflush(stdin);
+    fgets(musics[index].album, 25, stdin);
+    printf("Duration: ");
+    fflush(stdin);
+    fgets(musics[index].duration, 6, stdin);
 }
