@@ -183,7 +183,6 @@ void show(int n){
     printf("\n\n\n-=-=-=-=-=-=-=-=-=-= Musicas cadastradas -=-=-=-=-=-=-=-=-=-=\n\n\n");
     for(int i = 0; i < n; i++){
         if(musics[i].enable == 1 || musics[i].enable == 0 ){
-            printf("Enable: %d\n", musics[i].enable);
             printf("Title: %s", musics[i].title);
             printf("Author: %s", musics[i].author);
             printf("Album: %s", musics[i].album);
