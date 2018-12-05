@@ -33,6 +33,8 @@ int search(char title[50], int n);
 int get_num_musics();
 // Função responsável por atualizar o número de músicas cadastradas.
 void set_num_musics(int num);
+// Função de comparação entre dois títulos de música.
+int cpm22(const void *title_1, const void *title_2);
 
 void main(void){
     // Carregando as músicas salvas no arquivo.
@@ -181,6 +183,7 @@ int load(char txt[]){
 // Imprime o vetor com as músicas.
 void show(int n){
     printf("\n\n\n-=-=-=-=-=-=-=-=-=-= Musicas cadastradas -=-=-=-=-=-=-=-=-=-=\n\n\n");
+    qsort(musics, n, sizeof(music), cpm22);
     for(int i = 0; i < n; i++){
         if(musics[i].enable == 1 || musics[i].enable == 0 ){
             printf("Title: %s", musics[i].title);
@@ -269,4 +272,17 @@ void update(void){
     printf("Duration: ");
     fflush(stdin);
     fgets(musics[index].duration, 6, stdin);
+}
+
+// Implentação da função.
+int cpm22(const void *title_1, const void *title_2){
+    // Comparando dois títulos de música.
+    int a = strcmp((*(music *)title_1).title, (*(music *)title_2).title);
+    if(a == 0){
+        return 0;
+    }else if(a < 0){
+        return -1;
+    }else{
+        return 1;
+    }
 }
