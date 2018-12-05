@@ -26,7 +26,7 @@ void show(int n);
 // Deleta uma música.
 int delete(int n);
 // Edita uma música.
-void update(void);
+void update(int n);
 // Procura uma música na lista.
 int search(char title[50], int n);
 // Função responsável por retornar o número de músicas cadastradas.
@@ -64,7 +64,7 @@ void main(void){
                 break;
             case 3:
                 // Atualiza uma música.
-                update();
+                update(count);
                 break;
             case 4:
                 if ( delete(count)  == -1)
@@ -185,7 +185,7 @@ void show(int n){
     printf("\n\n\n-=-=-=-=-=-=-=-=-=-= Musicas cadastradas -=-=-=-=-=-=-=-=-=-=\n\n\n");
     qsort(musics, n, sizeof(music), cpm22);
     for(int i = 0; i < n; i++){
-        if(musics[i].enable == 1 || musics[i].enable == 0 ){
+        if(musics[i].enable == 1){
             printf("Title: %s", musics[i].title);
             printf("Author: %s", musics[i].author);
             printf("Album: %s", musics[i].album);
@@ -197,11 +197,12 @@ void show(int n){
 // Deleta uma música.
 int delete(int n){
     // Guarda o índice da música que o jovem deseja deletar.
-    int index;
-    printf("Type the index of the song: ");
+    char title[50];
+    printf("Type the name of the song: ");
     // Lendo o índice da música informada pelo usuário.
     fflush(stdin);
-    scanf("%d", &index);
+    gets(title);
+    int index = search(strcat(title, "\n"), n);
     // Verificando se o índice informado existe .
     if(index > (n - 1)){
         return -1;
@@ -213,16 +214,16 @@ int delete(int n){
 
 // Procura uma música na playlist.
 int search(char title[50], int n){
+    int index = -1;
     // Loop que percorre o vetor de músicas
     for(int i = 0; i < n; i++){
         // Verificando se a string procurada é igual ao título da música
         if ( strcmp(musics[i].title, title) == 0 ){
             // Retornando o índice da música que possui o nome informado
-            return i;
+            index = i;
         }
     }
-    // Deu ruim borracha.
-    return -1;
+    return index;
 }
 
 // Retorna a quantidade de músicas já cadastradas na plataforma.
@@ -252,13 +253,14 @@ void set_num_musics(int num){
 }
 
 // Função responsável por atualizar o registro de uma música.
-void update(void){
+void update(int n){
     // Guarda o índice da música selecionada.
-    int index;
-    printf("Type the id of the song: ");
+    char title[50];
+    printf("Type the name of the song: ");
     fflush(stdin);
     // Lendo o nome da música que será editada.
-    scanf("%d", &index);
+    gets(title);
+    int index = search(strcat(title, "\n"), n);
     // Lendo os valores e atualizando o vetor.
     printf("Title: ");
     fflush(stdin);
